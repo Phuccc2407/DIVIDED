@@ -247,7 +247,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32461417}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 5
@@ -299,7 +299,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -628,6 +628,8 @@ MonoBehaviour:
   _visibilityRules: {fileID: 11400000, guid: 8f014a5bd8dc68646a2a3c0b18c5bbd8, type: 2}
   _authenticator: {fileID: 0}
   _tickRate: 20
+  _maxTicksPerFrame: 5
+  _mtuExceededBehaviour: 2
   _patchLingeringProcessBug: 0
 --- !u!4 &140820898
 Transform:
@@ -662,6 +664,14 @@ MonoBehaviour:
   _displayTarget: 6
   fontSize: 13
   textColor: {r: 1, g: 1, b: 1, a: 1}
+  _highPingThreshold: 250
+  _highPingRecoveryThreshold: 180
+  _highJitterThreshold: 80
+  _highJitterRecoveryThreshold: 50
+  _highPacketLossThreshold: 10
+  _highPacketLossRecoveryThreshold: 5
+  _qualityChangeDuration: 2
+  _connectionStallThreshold: 2
 --- !u!114 &140820901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,6 +688,8 @@ MonoBehaviour:
   _dedicatedServer: 0
   _peerToPeer: 1
   _address: 127.0.0.1
+  _sendRateKiBPerSecond: 256
+  _sendBufferSizeKiB: 512
 --- !u!114 &140820902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,7 +772,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183816835}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 5
@@ -812,7 +824,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -1317,7 +1329,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260446432}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 10
@@ -1369,7 +1381,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -1650,15 +1662,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555a7762c0dc9114ba303e32c36d1c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TargetClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   hourHand: {fileID: 339341622}
 --- !u!136 &339341626
 CapsuleCollider:
@@ -1911,7 +1925,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
@@ -1963,7 +1977,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -2945,15 +2959,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555a7762c0dc9114ba303e32c36d1c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TargetClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   hourHand: {fileID: 1939637377}
 --- !u!82 &565840435
 AudioSource:
@@ -3081,15 +3097,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b75530599bfcfa49ae4ecfe6ed3d21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PurrNet.Runtime::PurrNet.StateMachine.StateMachine
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   _ownerAuth: 0
   _states:
   - {fileID: 1011417720}
@@ -3456,6 +3474,133 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675754178}
   m_CullTransparentMesh: 1
+--- !u!1 &698361896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 698361897}
+  - component: {fileID: 698361899}
+  - component: {fileID: 698361898}
+  m_Layer: 0
+  m_Name: Point Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &698361897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698361896}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.025, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2103695259}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &698361898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698361896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
+--- !u!108 &698361899
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698361896}
+  m_Enabled: 1
+  serializedVersion: 13
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 7.85
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShapeRadius: 0.025
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!1001 &737940923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3633,15 +3778,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555a7762c0dc9114ba303e32c36d1c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TargetClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   hourHand: {fileID: 494136759}
 --- !u!82 &828600831
 AudioSource:
@@ -4109,16 +4256,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374c74aff1f2aad4aafd98bfc4e9835a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaitForPlayersState
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
-  minPlayers: 2
+  minPlayers: 1
 --- !u!1 &1030237958
 GameObject:
   m_ObjectHideFlags: 0
@@ -4196,15 +4345,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a54ed1a3d40ca458b5f92842c98d0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawningState
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   playerPrefab: {fileID: 8561369791179465742, guid: 02e0bdeca0ab3a24eab6840d6e64558e, type: 3}
   spawnPoints:
   - {fileID: 592526684}
@@ -4249,15 +4400,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948e20669c7b3e479b3dc6c5f832ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   index: 0
   puzzle: {fileID: 1300881624}
   rend: {fileID: 1680973460}
@@ -4718,15 +4871,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948e20669c7b3e479b3dc6c5f832ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   index: 3
   puzzle: {fileID: 1300881624}
   rend: {fileID: 1270602007}
@@ -5002,15 +5157,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3655d76978ce324e997cd290bee4554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClockPuzzleManager
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   solved: 0
   controlClocks:
   - {fileID: 1122930481}
@@ -5054,15 +5211,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e19c64fa51ad814191cc28c2a4be0e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AllPuzzleManager
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   puzzles:
   - {fileID: 1300881624}
 --- !u!114 &1300881627
@@ -5077,15 +5236,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f249b486c84fff4cbba50361dc26cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoardPuzzleManager
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   solved: 0
   tiles: []
 --- !u!1 &1302738242
@@ -5158,7 +5319,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1302738242}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
@@ -5210,7 +5371,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -5475,7 +5636,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344219218}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 10
@@ -5527,7 +5688,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -5652,15 +5813,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555a7762c0dc9114ba303e32c36d1c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TargetClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   hourHand: {fileID: 1761694277}
 --- !u!82 &1406210070
 AudioSource:
@@ -6102,15 +6265,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555a7762c0dc9114ba303e32c36d1c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TargetClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   hourHand: {fileID: 1213340831}
 --- !u!82 &1558193067
 AudioSource:
@@ -6563,7 +6728,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627388667}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
@@ -6615,7 +6780,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -6833,7 +6998,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677298487}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 10
@@ -6885,7 +7050,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -7115,15 +7280,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948e20669c7b3e479b3dc6c5f832ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   index: 2
   puzzle: {fileID: 1300881624}
   rend: {fileID: 1799164694}
@@ -7348,7 +7515,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798378530}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 10
@@ -7400,7 +7567,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -7649,15 +7816,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948e20669c7b3e479b3dc6c5f832ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   index: 1
   puzzle: {fileID: 1300881624}
   rend: {fileID: 804519778}
@@ -8041,6 +8210,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -8459,6 +8629,96 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102503461}
   m_CullTransparentMesh: 1
+--- !u!1001 &2103695258
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.943186
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00000004393405
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.950509
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5359126596774246947, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1271856336953708890, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      propertyPath: m_Name
+      value: SnapeOffice
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: -746850793754543427, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 698361897}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+--- !u!4 &2103695259 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 33baeac1a6a86754bba3d189bd944494, type: 3}
+  m_PrefabInstance: {fileID: 2103695258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2107346727
 GameObject:
   m_ObjectHideFlags: 0
@@ -8936,15 +9196,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948e20669c7b3e479b3dc6c5f832ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControlClock
+  _networkRules: {fileID: 0}
+  _visitiblityRules: {fileID: 0}
   _isSetup: 0
   _prefabId: -2147483648
+  _hasPrefabScope: 0
+  _prefabScope: 0
   _componentIndex: -2147483648
   _shouldBePooled: 0
   _parent: {fileID: 0}
   _invertedPathToNearestParent: 
   _directChildren: []
-  _networkRules: {fileID: 0}
-  _visitiblityRules: {fileID: 0}
   index: 4
   puzzle: {fileID: 1300881624}
   rend: {fileID: 20888353}
@@ -9377,3 +9639,4 @@ SceneRoots:
   - {fileID: 218251162}
   - {fileID: 502613462}
   - {fileID: 189587482}
+  - {fileID: 2103695258}
