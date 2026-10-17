@@ -1,0 +1,389 @@
+fileFormatVersion: 2
+guid: 502ac4c0535ada847bcc415ce376b016
+ModelImporter:
+  serializedVersion: 24501
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat
+    second: {fileID: 2100000, guid: 3bfdf698085e2db4aa5a2c21de10610c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.001
+    second: {fileID: 2100000, guid: 009189a8bc9832d4e8480f401ae4965c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.002
+    second: {fileID: 2100000, guid: 860a345b35e8a9d4eb84a3081cbedeb1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.003
+    second: {fileID: 2100000, guid: 0ee870ce9ab37ce4abbf0950fdd1312a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.004
+    second: {fileID: 2100000, guid: b8e2787e8fa1dad40a8fc4176348dd3b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.005
+    second: {fileID: 2100000, guid: 557d4b595603aab45966f0d20e319cb4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.006
+    second: {fileID: 2100000, guid: b634fc725310af0439df3cf9cad23bef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.007
+    second: {fileID: 2100000, guid: fbcde0cd4ee965745a7c43f59261ee22, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.008
+    second: {fileID: 2100000, guid: 6e393e41333142a40b23695ebbfacc27, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.009
+    second: {fileID: 2100000, guid: e758a34d53a77d2438e8a9f3a20069a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.010
+    second: {fileID: 2100000, guid: 998936610ccd42f4fb3d4f7524efe3de, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.011
+    second: {fileID: 2100000, guid: 088680c85f644464a8008eca87822068, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.012
+    second: {fileID: 2100000, guid: 066e3acb6f12b6b4e9d611f018e21770, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.013
+    second: {fileID: 2100000, guid: f4ef39bf58b7db14da049762fa770cb3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.014
+    second: {fileID: 2100000, guid: ebb9ea13a57e2da449214d5d9583ec92, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.015
+    second: {fileID: 2100000, guid: 666b0b8b68167bc489560910e56f4e50, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.016
+    second: {fileID: 2100000, guid: 32fc34f2c982cf44991ac32b4e4de4ab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.017
+    second: {fileID: 2100000, guid: 3a9f2fd48a63b9d418d90bb987882a85, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.018
+    second: {fileID: 2100000, guid: bead249182385554799413f9cd3e8be2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.019
+    second: {fileID: 2100000, guid: 2c72042660798e146ad0f16574bc0b84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.020
+    second: {fileID: 2100000, guid: 4432dcf1a5063004696d9a4e1c0072c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.021
+    second: {fileID: 2100000, guid: 6d26536be14848d4e9ea04724a426355, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.022
+    second: {fileID: 2100000, guid: 03bb57644fc5e68479e0b3d9ecc23cdd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.023
+    second: {fileID: 2100000, guid: c917323dae1d35546aa71f74ddde53c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.024
+    second: {fileID: 2100000, guid: d698219521b7b5142b569857e33beb53, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_atlas_mat.025
+    second: {fileID: 2100000, guid: 55a76839506c9754da04e90707e3e7c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_cabinet_mat
+    second: {fileID: 2100000, guid: 6ffae5a5f9683bc41bbf5cd75cb52bdd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_candleflames_mat
+    second: {fileID: 2100000, guid: 2eae26a46bdb11343a012507f9a4a565, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_coals
+    second: {fileID: 2100000, guid: 1ee7a800541c4884c8aebc3e10bed056, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_firecoals_mat
+    second: {fileID: 2100000, guid: 3c49a7dfaded65a4cae8e6b7c84f5a61, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_fireembers_mat
+    second: {fileID: 2100000, guid: c845db14b073a2e4f9dc0d1531687dd2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_firevfx_mat
+    second: {fileID: 2100000, guid: 6aa4b1c57003fe74ea0cf3c033013d70, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_floor_mat
+    second: {fileID: 2100000, guid: e806bc29cd3053049a91e33ef795b9b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_glass_mat
+    second: {fileID: 2100000, guid: 416d1097a1f3f5e439b7e6bcc65372f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_glass_mat.001
+    second: {fileID: 2100000, guid: 15ce8560b13c26d459fac738770c7d1f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_glass_mat.002
+    second: {fileID: 2100000, guid: b1f19dd5a28e2944ca6b6509fbb68b13, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_glass_mat.003
+    second: {fileID: 2100000, guid: 52fece0b418bc4b44a79522c0475f213, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_glass_mat.004
+    second: {fileID: 2100000, guid: 9f495647c5c1fdf4eb3b85daf012fceb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_glass_mat.005
+    second: {fileID: 2100000, guid: 0ea21cf08093b4b4e93f96a1633ce046, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_glass_mat.006
+    second: {fileID: 2100000, guid: c3a6649c59eb853429f1dfa20e04b3aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_glass_mat.007
+    second: {fileID: 2100000, guid: 6b07965559818174d9a4cbc0142b6756, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_lampbulbs_mat
+    second: {fileID: 2100000, guid: 98bd440d3aac390408d70afc62e379d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_lampglows_mat
+    second: {fileID: 2100000, guid: c522c1d0c8a3d9b45b108fa799c14142, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_liquids_mat
+    second: {fileID: 2100000, guid: 5bfa9e1b9137510498d26927b4907a63, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_liquids_mat.001
+    second: {fileID: 2100000, guid: 55b8dd189d3448e4dad0d25621151d91, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_liquids_mat.002
+    second: {fileID: 2100000, guid: 61768cf5ccae1554a87bfb7a80060037, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_liquids_mat.003
+    second: {fileID: 2100000, guid: e33499a998c812f46a19b1aa83d0bcda, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_liquids_mat.004
+    second: {fileID: 2100000, guid: a34b99e4fd58b1049b729c1b8f2354d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_liquids_mat.005
+    second: {fileID: 2100000, guid: c5922a0650e540a4d9657d3b2aa0f72d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_liquids_mat.006
+    second: {fileID: 2100000, guid: 780a66b9f477170448a6a14258b45951, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_personalprops_mat
+    second: {fileID: 2100000, guid: 66c978ce69cd0d24fba2d4ff7b1b2bb7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_table_mat
+    second: {fileID: 2100000, guid: ba9a85ff453c50445b0149651b8c98c9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_walldecals_mat
+    second: {fileID: 2100000, guid: 1393fb66b4a89a848b4f7ec4d650465a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_walls_mat
+    second: {fileID: 2100000, guid: 13556f58c0e43ba419d24149891258e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pk_snapesoffice_windowglass_mat
+    second: {fileID: 2100000, guid: f070fed89d7ca714ab57e9722bff2d4f, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+    searchTexturesGlobally: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    importUVs: -1
+    importVertexColors: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+    calculateBlendshapeNormalsDeltaFromImportedNormals: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
