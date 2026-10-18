@@ -19,6 +19,15 @@ namespace PurrLobby
             ShowViewInternal(defaultView);
         }
 
+        private void LateUpdate()
+        {
+            if (!IsLobbyViewVisible())
+                return;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         public void ShowView<T>(bool hideOthers = true) where T : View
         {
             foreach (var view in allViews)
@@ -69,6 +78,17 @@ namespace PurrLobby
             
             view.OnHide();
             view.OnViewHide?.Invoke();
+        }
+
+        private bool IsLobbyViewVisible()
+        {
+            foreach (var view in allViews)
+            {
+                if (view && view.canvasGroup && view.canvasGroup.alpha > 0.5f)
+                    return true;
+            }
+
+            return false;
         }
 
         #region Events

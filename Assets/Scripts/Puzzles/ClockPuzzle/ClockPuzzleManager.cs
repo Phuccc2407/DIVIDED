@@ -79,7 +79,12 @@ public class ClockPuzzleManager : PuzzleBase
     void PlayTickSound(Vector3 position)
     {
         if (tickSound)
-            AudioSource.PlayClipAtPoint(tickSound, position, 1f);
+        {
+            float volume = SettingsManager.Instance != null
+                ? SettingsManager.Instance.GetVolume(SettingsVolumeChannel.Sfx)
+                : 1f;
+            AudioSource.PlayClipAtPoint(tickSound, position, volume);
+        }
     }
 
     [ObserversRpc]

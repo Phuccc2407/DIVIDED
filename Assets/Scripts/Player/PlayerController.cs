@@ -9,6 +9,8 @@ using UnityEngine.XR;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : NetworkBehaviour
 {
+    public static bool IsLocalPlayerSpawned { get; private set; }
+
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float sprintSpeed = 8f;
@@ -55,6 +57,7 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
+            IsLocalPlayerSpawned = true;
             foreach (var rend in renderers)
             {
                 rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
@@ -130,8 +133,11 @@ public class PlayerController : NetworkBehaviour
         if (PlayerInputBlocker.IsBlocked)
             return;
 
-        float mouseX = lookInput.x * lookSensitivity;
-        float mouseY = lookInput.y * lookSensitivity;
+        float sensitivity = SettingsManager.Instance != null
+            ? SettingsManager.Instance.MouseSensitivity
+            : lookSensitivity;
+        float mouseX = lookInput.x * sensitivity;
+        float mouseY = lookInput.y * sensitivity;
 
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
@@ -158,6 +164,7 @@ public class PlayerController : NetworkBehaviour
     {
         if (!isOwner) return;
 
+        IsLocalPlayerSpawned = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
