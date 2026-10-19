@@ -72,7 +72,7 @@ public sealed class SettingsManager : MonoBehaviour
 
     public void SetMouseSensitivity(float value)
     {
-        MouseSensitivity = Mathf.Clamp(value, 0.05f, 1f);
+        MouseSensitivity = Mathf.Clamp(value, 0.01f, 0.3f);
         SaveFloat(MouseSensitivityKey, MouseSensitivity);
         NotifyChanged();
     }

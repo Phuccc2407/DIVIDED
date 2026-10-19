@@ -79,7 +79,7 @@ public sealed class SettingsView : MonoBehaviour
         masterSlider = CreateSlider(panel.transform, "Master volume", 0f, 1f);
         musicSlider = CreateSlider(panel.transform, "Music volume", 0f, 1f);
         sfxSlider = CreateSlider(panel.transform, "SFX volume", 0f, 1f);
-        sensitivitySlider = CreateSlider(panel.transform, "Mouse sensitivity", 0.05f, 4f);
+        sensitivitySlider = CreateSlider(panel.transform, "Mouse sensitivity", 0.01f, 0.3f);
         fullscreenToggle = CreateToggle(panel.transform, "Fullscreen");
 
         var resetButton = CreateButton(panel.transform, "Reset defaults");
