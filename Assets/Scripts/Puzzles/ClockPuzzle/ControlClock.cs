@@ -15,6 +15,8 @@ public class ControlClock : NetworkBehaviour, IInteractable
 
     public int CurrentHour => hour;
 
+    public string InteractionPrompt => "F: Rotate Clock";
+
     public void Interact()
     {
         puzzle.RotateControlClock(index);

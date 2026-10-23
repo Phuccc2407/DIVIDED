@@ -5,6 +5,8 @@ public class NoteItem : MonoBehaviour, IInteractable
 {
     [SerializeField] private Texture noteTexture;
 
+    public string InteractionPrompt => "F: Read Note";
+
     public void Interact()
     {
         var view = InstanceHandler.GetInstance<NoteView>();

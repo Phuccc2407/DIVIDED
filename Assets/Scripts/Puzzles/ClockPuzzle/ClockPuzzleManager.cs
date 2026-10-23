@@ -7,7 +7,6 @@ public class ClockPuzzleManager : PuzzleBase
     public ControlClock[] controlClocks;
     public TargetClock[] targetClocks;
     [SerializeField] private AudioClip tickSound;
-    [SerializeField] float globalTickInterval = 60f;
 
     int[] mapping = {2,4,0,1,3};
 
@@ -17,29 +16,6 @@ public class ClockPuzzleManager : PuzzleBase
     {
         if (!isServer)
             return;
-
-        StartCoroutine(GlobalClockTick());
-    }
-
-    IEnumerator GlobalClockTick()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(globalTickInterval);
-
-            foreach (var clock in controlClocks)
-            {
-                clock.AddHour();
-                PlayTickSound(clock.transform.position);
-            }
-
-            foreach (var clock in targetClocks)
-            {
-                clock.AddHour();
-                PlayTickSound(clock.transform.position);
-            }
-
-        }
     }
 
     [ServerRpc]

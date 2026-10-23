@@ -9,7 +9,7 @@ public class PotionCookingStation : MonoBehaviour, IInteractable, IInteractableP
     [SerializeField] private float minLightIntensity = 0f;
     [SerializeField] private float maxLightIntensity = 2f;
 
-    public string InteractionPrompt => "Q: Giảm nhiệt\nE: Tăng nhiệt";
+    public string InteractionPrompt => "Q: Heat Up\nE: Cool Down";
 
     private void Awake()
     {
