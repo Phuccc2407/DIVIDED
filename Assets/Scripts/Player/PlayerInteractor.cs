@@ -22,6 +22,10 @@ public class PlayerInteractor : NetworkBehaviour
             interactTextView = InstanceHandler.GetInstance<InteractTextView>();
             gameViewManager = InstanceHandler.GetInstance<GameViewManager>();
             carryController = GetComponent<PlayerCarryController>();
+            if (carryController == null)
+                carryController = gameObject.AddComponent<PlayerCarryController>();
+            carryController.Initialize(cam != null ? cam.transform : transform);
+            UpdateCarriedHud();
         }
     }
 
@@ -33,6 +37,19 @@ public class PlayerInteractor : NetworkBehaviour
         private Transform carriedTransform;
 
         public bool IsCarrying => carriedItem != null;
+        public IPotionCarryable CarriedItem => carriedItem;
+
+        public void Initialize(Transform cameraTransform)
+        {
+            if (carryPoint != null)
+                return;
+
+            var carryPointObject = new GameObject("CarryPoint");
+            carryPoint = carryPointObject.transform;
+            carryPoint.SetParent(cameraTransform, false);
+            carryPoint.localPosition = new Vector3(0.35f, -0.3f, 0.8f);
+            carryPoint.localRotation = Quaternion.identity;
+        }
 
         public bool TryPickUp(IPotionCarryable item)
         {
@@ -49,7 +66,7 @@ public class PlayerInteractor : NetworkBehaviour
             carriedTransform = item.CarryTransform;
             carriedTransform.SetParent(carryPoint, false);
             carriedTransform.localPosition = Vector3.zero;
-            carriedTransform.localRotation = Quaternion.identity;
+            carriedTransform.localRotation = item.CarryRotation;
             item.SetCarried(true);
             return true;
         }
@@ -64,6 +81,17 @@ public class PlayerInteractor : NetworkBehaviour
             carriedItem.SetCarried(false);
             carriedItem = null;
             carriedTransform = null;
+        }
+
+        public bool TryDeposit(IPotionDropTarget target)
+        {
+            if (!IsCarrying || target == null || !target.TryAccept(carriedItem))
+                return false;
+
+            carriedItem.ReturnToWorld();
+            carriedItem = null;
+            carriedTransform = null;
+            return true;
         }
     }
 
@@ -80,6 +108,7 @@ public class PlayerInteractor : NetworkBehaviour
         if (Keyboard.current.qKey.wasPressedThisFrame && carryController != null && carryController.IsCarrying)
         {
             carryController.Drop();
+            UpdateCarriedHud();
         }
         else if (Keyboard.current.qKey.wasPressedThisFrame
             && current is PotionCookingStation cookingStation)
@@ -88,8 +117,17 @@ public class PlayerInteractor : NetworkBehaviour
         }
         else if (Keyboard.current.eKey.wasPressedThisFrame)
         {
-            if (current is IPotionCarryable carryable && carryController != null)
-                carryController.TryPickUp(carryable);
+            if (carryController != null && carryController.IsCarrying
+                && current is IPotionDropTarget dropTarget)
+            {
+                if (carryController.TryDeposit(dropTarget))
+                    UpdateCarriedHud();
+            }
+            else if (current is IPotionCarryable carryable && carryController != null)
+            {
+                if (carryController.TryPickUp(carryable))
+                    UpdateCarriedHud();
+            }
             else
                 current?.Interact();
         }
@@ -108,8 +146,10 @@ public class PlayerInteractor : NetworkBehaviour
                     current = interactable;
 
                     // UI
-                    interactTextView.SetText(GetInteractionPrompt(interactable));
+                    string interactionPrompt = GetInteractionPrompt(interactable);
+                    interactTextView.SetText(interactionPrompt);
                     gameViewManager.ShowView<InteractTextView>(false);
+                    UpdateCarriedHud(interactionPrompt);
 
                     // Outline
                     if (hit.collider.TryGetComponent(out Outline outline))
@@ -125,8 +165,31 @@ public class PlayerInteractor : NetworkBehaviour
         ClearCurrent();
     }
 
-    private static string GetInteractionPrompt(IInteractable interactable)
+    private void UpdateCarriedHud(string contextualPrompt = null)
     {
+        if (!InstanceHandler.TryGetInstance(out MainGameView mainGameView))
+            return;
+
+        string itemName = string.Empty;
+        if (carryController != null && carryController.IsCarrying)
+            itemName = carryController.CarriedItem switch
+            {
+                PotionIngredientObject ingredient => ingredient.Ingredient.ToString(),
+                _ => "Item"
+            };
+
+        string prompt = itemName.Length == 0
+            ? string.Empty
+            : string.IsNullOrEmpty(contextualPrompt) ? "Q: Drop" : contextualPrompt;
+        mainGameView.PlayerHUD.SetCarriedItem(itemName, prompt);
+    }
+
+    private string GetInteractionPrompt(IInteractable interactable)
+    {
+        if (carryController != null && carryController.IsCarrying
+            && interactable is IPotionDropTarget)
+            return ((IPotionDropTarget)interactable).CarryPrompt;
+
         if (interactable is IInteractablePrompt prompt)
             return prompt.InteractionPrompt;
 
@@ -139,6 +202,7 @@ public class PlayerInteractor : NetworkBehaviour
         {
             gameViewManager.HideView<InteractTextView>();
             current = null;
+            UpdateCarriedHud();
         }
 
         if (currentOutline != null)

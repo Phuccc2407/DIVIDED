@@ -18,6 +18,7 @@ public class ConnectionStarter : MonoBehaviour
     private static bool _hasStarted = false;
     private bool _useUnityRelay = false;
     private bool _isFromLobby;
+    private Coroutine _clientConnectionTimeout;
     
     private void Awake()
     {
@@ -29,13 +30,21 @@ public class ConnectionStarter : MonoBehaviour
             return;
         }
         
-        _lobbyDataHolder = FindFirstObjectByType<LobbyDataHolder>();
-        if(!_lobbyDataHolder) {
-            PurrLogger.LogError($"Failed to get {nameof(LobbyDataHolder)} component.", this);
-            return;
-        }
+        // ConnectionStarter owns startup, so NetworkManager must not auto-start
+        // before the transport and host/client role have been selected.
+        _networkManager.startServerFlags = StartFlags.None;
+        _networkManager.startClientFlags = StartFlags.None;
 
-        _isFromLobby = true;
+        _lobbyDataHolder = FindFirstObjectByType<LobbyDataHolder>();
+        _isFromLobby = _lobbyDataHolder && _lobbyDataHolder.CurrentLobby.IsValid;
+        _networkManager.onClientConnectionState += OnClientConnectionState;
+        _networkManager.onServerConnectionState += OnServerConnectionState;
+
+        PurrLogger.Log(
+            $"Connection mode: {(_isFromLobby ? "Lobby/Steam" : "UDP test")}, " +
+            $"build={(!Application.isEditor ? "client build" : "Editor")}, " +
+            $"configured transport={_networkManager.transport?.GetType().Name ?? "NULL"}",
+            this);
             
 #if UTP_LOBBYRELAY
         // Check if we're using UTP with relay - requires async configuration
@@ -87,24 +96,43 @@ public class ConnectionStarter : MonoBehaviour
                 return;
             }
 
-            if (!_steamTransport)
-            {
-                PurrLogger.LogError($"Failed to get {nameof(SteamTransport)} component.", this);
-                return;
-            }
-
             if (_isFromLobby)
+            {
+                if (!_steamTransport)
+                {
+                    PurrLogger.LogError($"Failed to get {nameof(SteamTransport)} component.", this);
+                    return;
+                }
+
                 StartFromLobby();
+            }
             else
                 StartNormal();
         }
 
     private void StartNormal()
     {
-        _networkManager.transport = _udpTransport;
+        if (!_udpTransport)
+        {
+            PurrLogger.LogError($"Failed to get {nameof(UDPTransport)} component.", this);
+            return;
+        }
 
-        PurrLogger.Log("Starting as Host (non-lobby)", this);
+        if (_networkManager.transport != _udpTransport)
+            _networkManager.transport = _udpTransport;
+
+        PurrLogger.Log(
+            $"UDP config: address={_udpTransport.address}, port={_udpTransport.serverPort}, " +
+            "timeout configured in UDPTransport",
+            this);
+
+#if UNITY_EDITOR
+        PurrLogger.Log("Starting as Host with UDP (non-lobby)", this);
         _networkManager.StartHost();
+#else
+        PurrLogger.Log("Starting as Client with UDP (non-lobby)", this);
+        StartCoroutine(StartClient());
+#endif
     }
 
     private void StartFromLobby()
@@ -321,8 +349,47 @@ public class ConnectionStarter : MonoBehaviour
     {
         // Brief delay to ensure server is fully listening before client connects
         yield return new WaitForSeconds(1f);
+        PurrLogger.Log(
+            $"Starting client. transport={_networkManager.transport?.GetType().Name ?? "NULL"}, " +
+            $"clientState={_networkManager.clientState}",
+            this);
         _networkManager.StartClient();
+        _clientConnectionTimeout = StartCoroutine(LogClientConnectionTimeout());
+    }
+
+    private IEnumerator LogClientConnectionTimeout()
+    {
+        yield return new WaitForSeconds(7f);
+
+        if (_networkManager.clientState != ConnectionState.Connected)
+        {
+            PurrLogger.LogError(
+                $"Client did not connect within 7 seconds. " +
+                $"state={_networkManager.clientState}, transport={_networkManager.transport?.GetType().Name ?? "NULL"}. " +
+                "Check that the Editor host is running on the same machine and port 5000 is not blocked.",
+                this);
+        }
+    }
+
+    private void OnClientConnectionState(ConnectionState state)
+    {
+        PurrLogger.Log($"Client connection state: {state}", this);
+    }
+
+    private void OnServerConnectionState(ConnectionState state)
+    {
+        PurrLogger.Log($"Server connection state: {state}", this);
+    }
+
+    private void OnDestroy()
+    {
+        if (_networkManager)
+        {
+            _networkManager.onClientConnectionState -= OnClientConnectionState;
+            _networkManager.onServerConnectionState -= OnServerConnectionState;
+        }
+
+        if (_clientConnectionTimeout != null)
+            StopCoroutine(_clientConnectionTimeout);
     }
 }
-
-

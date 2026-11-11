@@ -96,7 +96,7 @@ public sealed class SettingsManager : MonoBehaviour
         SetMasterVolume(1f);
         SetMusicVolume(1f);
         SetSfxVolume(1f);
-        SetMouseSensitivity(0.5f);
+        SetMouseSensitivity(0.1f);
         SetFullscreen(Screen.fullScreen);
     }
 
@@ -105,7 +105,11 @@ public sealed class SettingsManager : MonoBehaviour
         MasterVolume = PlayerPrefs.GetFloat(MasterVolumeKey, 1f);
         MusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
         SfxVolume = PlayerPrefs.GetFloat(SfxVolumeKey, 1f);
-        MouseSensitivity = Mathf.Clamp(PlayerPrefs.GetFloat(MouseSensitivityKey, 0.5f), 0.05f, 4f);
+        MouseSensitivity = Mathf.Clamp(
+            PlayerPrefs.GetFloat(MouseSensitivityKey, 0.1f),
+            0.01f,
+            0.3f
+        );
         Fullscreen = PlayerPrefs.GetInt(FullscreenKey, Screen.fullScreen ? 1 : 0) == 1;
 
         AudioListener.volume = MasterVolume;

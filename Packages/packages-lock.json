@@ -273,6 +273,13 @@
       },
       "hash": "7061f0a5b46b0aaff85d5dfe0f9791c5b153012a"
     },
+    "dev.purrnet.services": {
+      "version": "https://github.com/PurrNet/PurrServices.git?path=Assets/Tool#v1.2.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "83cd197c12ff4fd76266273cf82ae4523885f920"
+    },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
       "depth": 0,

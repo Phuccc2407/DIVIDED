@@ -1,0 +1,348 @@
+# HƯỚNG DẪN SETUP PHÒNG PHA THUỐC
+
+Phiên bản hiện tại yêu cầu hoàn thành nhiều mẻ thuốc liên tiếp. Người chơi
+cầm từng lọ nguyên liệu, nhìn vào nồi rồi nhấn **E** để Pour. Chất lỏng giả
+trong nồi sẽ đổi màu và trộn theo màu các lọ đã đổ vào.
+
+- **Sai nguyên liệu hoặc sai thứ tự:** Vẫn đổ được vào nồi, nhưng chỉ đến
+  lúc bấm Start mới kiểm tra. Nếu sai, nồi nổ, phát Explosion Effect và reset.
+- **Đúng nguyên liệu:** Nồi chuyển sang ReadyToCook.
+- **Đúng nhiệt khi bấm bắt đầu:** Phát Success Effect, chuyển sang công thức
+  tiếp theo và reset nồi. Puzzle chỉ giải sau khi đủ 5 hoặc 6 mẻ đúng.
+- **Hoàn thành mẻ cuối:** Hiện `PuzzleSolvedView` cho host và client, sau đó
+  dịch chuyển toàn bộ người chơi về Hub.
+- **Host** là nơi quyết định trạng thái; client chỉ hiển thị trạng thái đã đồng bộ.
+
+## 1. POTION PUZZLE MANAGER
+
+Tạo một object trong scene và gắn:
+
+- PotionPuzzleManager.
+- NetworkObject/NetworkBehaviour theo cấu hình PurrNet của project.
+- Thêm object manager vào `AllPuzzleManager.puzzles`.
+
+Gán các field của PotionPuzzleManager:
+
+- **Recipes:** Gán tối thiểu 6 công thức theo đúng thứ tự cần chơi.
+- **Required Successful Recipes:** Chọn 5 hoặc 6. Mặc định là 6.
+- **Cooking Station:** Object có PotionCookingStation.
+- **Explosion Effect Prefab:** Prefab particle khi pha sai.
+- **Success Effect Prefab:** Prefab particle khi pha đúng.
+- **Level Selection Manager:** Object `LevelSelectionManager` trong scene.
+- **Hub Level Index:** Index của Hub trong `LevelSelectionManager`, mặc định 0.
+
+**Chuỗi công thức test mặc định trong SampleScene:**
+
+1. RedHerb → BlueHerb → YellowHerb, nhiệt 2.
+2. YellowHerb → PurpleHerb, nhiệt 4.
+3. BlueHerb → WhiteHerb → RedHerb, nhiệt 1.
+4. PurpleHerb → YellowHerb, nhiệt 3.
+5. WhiteHerb → BlueHerb → PurpleHerb, nhiệt 5.
+6. RedHerb → YellowHerb, nhiệt 2.
+
+Cần Pour đủ nguyên liệu của công thức hiện tại rồi mới bấm StartCooking.
+
+**Cách chỉnh hướng lọ khi đang cầm:**
+
+- Chọn object có `PotionIngredientObject`.
+- Trong Inspector, tìm field **Carry Rotation**.
+- Chỉnh các góc X/Y/Z theo độ, ví dụ `X = 90` nếu muốn xoay thân lọ
+  dựng lên khi cầm.
+- Nhấn Play, nhặt lọ và kiểm tra lại. Rotation này chỉ áp dụng khi lọ
+  nằm trong tay, không thay đổi rotation của lọ trên bàn.
+- Nếu không thấy field này, kiểm tra script đã compile xong và chọn đúng
+  component `PotionIngredientObject`.
+
+Mỗi loại lọ có thể có Carry Rotation riêng. Nếu vẫn khó căn, đặt một child
+Transform làm `Carry Transform`, căn trục của child theo hướng muốn cầm rồi
+gán child đó vào field tương ứng.
+
+Nếu Recipes để trống hoặc không hợp lệ, script tự dùng 6 công thức mặc định
+ở trên. Không có thời gian chờ; mỗi mẻ được kiểm tra ngay khi bấm StartCooking.
+
+Không cần 6 chai kết quả. Xóa hoặc không đặt các object cũ có component `PotionResultBottle` trong scene.
+
+## 2. COOKING STATION
+
+Gắn `PotionCookingStation` vào object nồi/bếp có Collider.
+
+Gán các field:
+
+- **Puzzle Manager:** PotionPuzzleManager.
+- **Fire Effect:** ParticleSystem ngọn lửa.
+- **Fire Light:** Light của ngọn lửa.
+- **Liquid Renderer:** Renderer của mesh chất lỏng giả trong nồi.
+- **Empty Liquid Color:** Màu khi nồi rỗng, thường dùng `Color.clear`.
+- **Success Effect:** ParticleSystem chúc mừng.
+- **Heat Step:** Thường đặt 1.
+
+Liquid Renderer phải là Renderer riêng của mesh chất lỏng. Không dùng chung material với nồi, bếp hoặc object khác.
+
+Script đổi màu material khi `SyncVar liquidColor` thay đổi, vì vậy cả host và client đều phải có mesh này.
+
+**Cooking Station thực hiện:**
+
+- **E** khi đang nhìn nồi và không cầm lọ: Tăng nhiệt.
+- **Q** khi đang nhìn nồi và không cầm lọ: Giảm nhiệt.
+- **E** khi đang cầm lọ và nhìn nồi: Pour lọ vào nồi.
+
+## 3. LỌ NGUYÊN LIỆU
+
+Mỗi lọ nguyên liệu cần có:
+
+- PotionIngredientObject.
+- Collider.
+- Rigidbody.
+- Layer nằm trong Interactable Layer của PlayerInteractor.
+- Puzzle Manager trỏ đến cùng PotionPuzzleManager.
+- Ingredient chính xác theo công thức.
+- Ingredient Color là màu của nguyên liệu.
+
+**Cấu hình Rigidbody:**
+
+- Use Gravity: Bật.
+- Is Kinematic: Tắt khi lọ đang ở trên bàn.
+- Collision Detection: Continuous nếu lọ di chuyển nhanh hoặc dễ rơi.
+
+**Khi nhặt lọ, script sẽ:**
+
+- Tắt Collider của lọ.
+- Bật Is Kinematic.
+- Tắt Gravity.
+- Gắn lọ vào một slot cầm duy nhất của player.
+
+Khi nhấn **Q** để Drop, lọ sẽ được thả trước mặt player và Gravity được bật lại.
+
+Khi Pour thành công, lọ được trả về vị trí ban đầu.
+
+Nếu Ingredient Color để màu trắng, script tự đặt màu mặc định cho RedHerb, BlueHerb, YellowHerb và PurpleHerb. Tuy nhiên, vẫn nên gán màu thủ công để có kết quả đúng ý với material của lọ.
+
+**Màu gợi ý:**
+
+- RedHerb: Đỏ.
+- BlueHerb: Xanh dương.
+- YellowHerb: Vàng.
+- PurpleHerb: Tím.
+- WhiteHerb: Trắng.
+
+## 4. NÚT BẮT ĐẦU NẤU
+
+Thêm `PotionCookingStartButton` vào nút bắt đầu nấu.
+
+Gán:
+
+- **Puzzle Manager:** Cùng PotionPuzzleManager.
+- **Collider:** Bắt buộc.
+- **Layer:** Nằm trong Interactable Layer của PlayerInteractor.
+
+Nút bắt đầu nấu sẽ kiểm tra mẻ hiện tại. Player cần nhìn
+vào nồi để dùng **E/Q** điều chỉnh nhiệt trước khi bấm nút.
+
+- Đúng nhiệt: phát Success Effect, chuyển sang mẻ tiếp theo và reset nồi.
+- Chỉ mẻ thứ 5 hoặc thứ 6 (theo `Required Successful Recipes`) mới giải
+  puzzle.
+- Sai công thức, sai thứ tự hoặc sai nhiệt: phát Explosion Effect và reset
+  toàn bộ mẻ trong nồi.
+
+Không có bước giữ nhiệt hoặc thời gian chờ. Có thể Pour sai thứ tự hoặc
+Pour thừa để test; việc kiểm tra toàn bộ danh sách nguyên liệu chỉ xảy ra
+khi bấm nút StartCooking. Nếu sai, mẻ hiện tại bị reset để có thể làm lại
+từ đầu.
+Sau khi hoàn thành đủ số mẻ, puzzle chuyển sang Completed nên nồi sẽ không
+nhận chỉnh nhiệt tiếp. Đây là trạng thái đã hoàn thành, không phải bị treo.
+
+Nếu scene không dùng nút riêng, có thể gọi `StartCooking` từ một UI hoặc interactable khác.
+
+## 5. PARTICLE
+
+### Explosion Effect
+
+- Kéo một prefab ParticleSystem vào `Explosion Effect Prefab` của
+  PotionPuzzleManager.
+- Tắt Play On Awake.
+- Particle phát khi sai lọ, sai thứ tự hoặc nhiệt vượt quá Required Heat.
+
+### Success Effect
+
+- Kéo một prefab ParticleSystem vào `Success Effect Prefab` của
+  PotionPuzzleManager.
+- Tắt Play On Awake.
+- Particle phát ngay khi bấm bắt đầu với đúng nguyên liệu và đúng nhiệt.
+- Script sẽ tự Instantiate prefab làm child của Cooking Station khi network
+  object spawn. Particle không còn phụ thuộc vào object instance trong scene.
+- Trong `SampleScene`, Success Effect Prefab đang dùng prefab
+  `CFXR2 Shiny Item`. Prefab này đã được đặt `Looping = false`,
+  `Play On Awake = false` và thời lượng khoảng 1.5 giây để dễ nhìn.
+- Nếu tự tạo particle, đặt object particle tại vị trí miệng nồi, bật
+  `ParticleSystemRenderer`, gán Material có shader particle/URP Unlit và
+  đặt Start Lifetime khoảng 1-2 giây.
+- Kiểm tra `Emission` có Burst hoặc Rate over Time lớn hơn 0, `Start Size`
+  không quá nhỏ và `Start Color` có alpha lớn hơn 0.
+- Không để particle ở xa nồi. Chọn prefab trong Hierarchy, bấm F để focus
+  và kéo object tới đúng vị trí nồi.
+- Hub và phòng 2 hiện dùng teleport trong cùng scene. Vì vậy không đặt
+  particle instance ở một vị trí rời cố định trong Hub. Khi
+  `PotionPuzzleManager` spawn, script sẽ Instantiate prefab làm child của
+  `Cooking Station` và đưa chúng về tâm nồi.
+- Nếu muốn particle lệch khỏi tâm nồi, sau khi chạy thử hãy tạo child
+  `EffectPoint` dưới Cooking Station rồi chỉnh script/setup theo vị trí đó;
+  không di chuyển particle độc lập ở root scene.
+
+Nên đặt Stop Action phù hợp và kiểm tra particle không tự phát lúc scene bắt đầu.
+
+## 6. PLAYER VÀ TƯƠNG TÁC
+
+Player prefab cần có:
+
+- PlayerController.
+- PlayerInteractor.
+- CharacterController.
+- PlayerInput và Input Action Map.
+- NetworkTransform.
+
+PlayerInteractor raycast phía trước. Nồi, nút, lọ và các interactable khác phải có Collider và nằm trên layer được chọn trong Interactable Layer.
+
+**Phím mặc định:**
+
+- **E:** Nhặt lọ, Pour vào nồi hoặc tương tác.
+- **Q:** Drop lọ đang cầm; nếu không cầm lọ thì giảm nhiệt nồi.
+- **Sprint:** Chạy nhanh và trừ stamina.
+
+Chỉ một lọ được cầm tại một thời điểm.
+
+Cả host và client đều có thể nhặt, thả và Pour; thao tác Pour được gửi đến server để kiểm tra.
+
+## 7. PLAYER HUD
+
+Script không tự tạo Canvas, sprite, panel, slider hoặc text.
+
+Hãy tự thiết kế toàn bộ HUD trong Canvas và gán reference trên MainGameView:
+
+- **Stamina Slider:** Slider, min 0, max 1.
+- **Carried Item Text:** Tên lọ đang cầm.
+- **Carried Prompt Text:** Ví dụ `Q: Drop` hoặc `E: Pour`.
+
+**Nếu muốn có ô đồ bên phải:**
+
+1. Tạo một Image/Panel trong Canvas.
+2. Đặt sprite, font, màu, anchor và animation theo giao diện của bạn.
+3. Gán text vào Carried Item Text và Carried Prompt Text.
+
+Script chỉ cập nhật nội dung, không thay đổi style UI.
+
+Nếu prompt không hiện, kiểm tra MainGameView đã gắn PlayerHUD và các reference text chưa.
+
+## 8. CẤU HÌNH SAMPLESCENE
+
+Trong SampleScene, kiểm tra:
+
+1. PotionPuzzleManager nằm trong danh sách `AllPuzzleManager.puzzles`.
+2. Cooking Station trỏ đúng về PotionPuzzleManager.
+3. PotionPuzzleManager trỏ đúng về Cooking Station.
+4. Liquid Renderer đã gắn mesh chất lỏng giả.
+5. Các lọ có Collider, Rigidbody, PotionIngredientObject và đúng layer.
+6. Nút bắt đầu nấu có PotionCookingStartButton và Collider.
+7. Explosion Effect Prefab và Success Effect Prefab đã gắn vào
+   PotionPuzzleManager.
+8. Không còn 6 object kết quả cũ cần dùng trong puzzle.
+9. PlayerInteractor có đúng Interactable Layer và Raycast Distance.
+10. MainGameView đã gắn các reference HUD thủ công.
+
+## 9. TEST HOST VÀ CLIENT
+
+### Test cùng máy
+
+1. Mở SampleScene trong Unity Editor.
+2. Chạy Editor trước để làm UDP host.
+3. Build và chạy client.
+4. Client dùng địa chỉ `127.0.0.1` nếu host và client cùng máy.
+5. Nhặt lọ theo đúng thứ tự, quan sát màu chất lỏng đổi trên cả hai máy.
+6. Pour đúng công thức hiện tại, chỉnh nhiệt theo công thức rồi nhấn Start.
+7. Lặp lại cho đủ 6 công thức; sau mẻ thứ 6 puzzle mới được solved.
+8. Sau mẻ cuối, kiểm tra `PuzzleSolvedView` xuất hiện rồi cả hai người chơi
+   được đưa về Hub.
+9. Thử đổ sai thứ tự hoặc chỉnh sai nhiệt, sau đó nhấn Start để kiểm tra
+   Explosion Effect và reset mẻ hiện tại.
+
+### Test hai máy trong LAN
+
+- Trên client, UDP Address phải là LAN IP của máy host, ví dụ `192.168.1.7`.
+- Không dùng `127.0.0.1` trên client khác máy.
+- Mở inbound UDP port 5000 trong Windows Firewall.
+- Cả hai máy phải dùng cùng port và cùng scene.
+
+## 10. XỬ LÝ LỖI
+
+### Không hiện E: Pour
+
+- Player đang không cầm PotionIngredientObject.
+- Nồi không có Collider hoặc không nằm trong Interactable Layer.
+- Raycast Distance quá ngắn.
+- Đang nhìn trúng object con của nồi thay vì object có PotionCookingStation.
+
+### Nhặt được lọ nhưng không thả có Gravity
+
+- Kiểm tra lọ có Rigidbody.
+- Kiểm tra Rigidbody Use Gravity.
+- Kiểm tra không có script khác đặt Is Kinematic lại.
+
+### Màu chất lỏng không đổi
+
+- Kiểm tra Liquid Renderer đã gán.
+- Renderer phải thuộc mesh chất lỏng giả, không phải nồi.
+- Kiểm tra PotionPuzzleManager đã là NetworkObject và đã spawn.
+- Kiểm tra Cooking Station của manager gắn đúng object.
+
+### Sai lọ nhưng không nổ
+
+- Kiểm tra `AddIngredient` được gọi qua `IPotionDropTarget`.
+- Kiểm tra Ingredient của lọ có đúng enum.
+- Kiểm tra Explosion Effect Prefab đã gắn và Play On Awake trong prefab đã tắt.
+- Nếu Console chỉ có log "Potion puzzle failed", kiểm tra thêm log
+  "has no Explosion Effect assigned".
+- ParticleSystem phải trỏ đúng object còn tồn tại trong scene. Script sẽ bật
+  lại GameObject particle trước khi phát, nhưng reference vẫn phải đúng.
+- Cooking Station mà manager trỏ tới phải là station có Liquid Renderer,
+  không phải station cũ không có Renderer.
+- Nếu log ghi `has no Explosion Effect Prefab assigned`,
+  mở đúng scene phòng 2, chọn object `PotionPuzzleManager`, gán lại
+  `Explosion Effect Prefab`, lưu scene rồi build lại. Log này cho biết build đang
+  chạy không chứa reference particle, dù Editor scene hiện tại có thể đã
+  được gán.
+- Đặt hai particle làm child của Cooking Station trong Hierarchy. Script có
+  thể tự tìm child có tên chứa `Explosion` hoặc `Success`/`Shiny`, nhưng
+  gán reference thủ công vẫn được khuyến nghị.
+
+### Lỗi ParticleSystemRenderer đã bị destroy
+
+Nếu log có `MissingReferenceException: ParticleSystemRenderer has been
+destroyed` tại `Outline.OnEnable` hoặc `Outline.OnDisable`, đó là Outline
+đang giữ renderer cũ của particle sau khi object bị unload/despawn. Hãy:
+
+- Không gắn `Outline` lên ParticleSystem hoặc object con của particle.
+- Chỉ gắn Outline lên nồi, nút và lọ nguyên liệu.
+- Lưu scene phòng 2 sau khi đặt particle làm child của Cooking Station.
+- Đóng build cũ, build lại để scene và reference particle được cập nhật.
+- Bản script Outline hiện đã bỏ qua renderer bị destroy, nhưng particle vẫn
+  phải tồn tại trong scene phòng 2.
+
+### Bấm Start nhưng không có phản hồi
+
+Đọc Console trên host:
+
+- `Cannot start potion cooking` nghĩa là chưa Pour đủ nguyên liệu hoặc đang
+  bấm khi state không phải ReadyToCook.
+- Log `Potion recipe X/Y succeeded` cho biết đã hoàn thành mẻ thứ X trên
+  tổng số Y mẻ yêu cầu.
+- Nếu hiện `Sai nhiet do`, mẻ đã bị reset và nhiệt trở về 0.
+- Chỉ sau mẻ cuối cùng puzzle mới được solved và nồi khóa theo luồng puzzle.
+- Nếu solved nhưng không hiện UI, kiểm tra `GameViewManager.allViews` có
+  `PuzzleSolvedView` và `PuzzleSolvedView.canvasGroup` đã gán.
+- Nếu không về Hub, kiểm tra `PotionPuzzleManager.Level Selection Manager`
+  trỏ đúng object và `Hub Level Index` khớp thứ tự `levelSpawns`.
+
+### Client không thấy trạng thái
+
+- Kiểm tra client đã Connected.
+- Kiểm tra manager và station đều nằm trong scene được network spawn.
+- Kiểm tra host và client dùng cùng bản build/script.

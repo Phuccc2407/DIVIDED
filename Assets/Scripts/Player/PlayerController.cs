@@ -14,6 +14,10 @@ public class PlayerController : NetworkBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float sprintSpeed = 8f;
+    [SerializeField, Min(0.1f)] private float maxStamina = 5f;
+    [SerializeField, Min(0.1f)] private float sprintDrainPerSecond = 1f;
+    [SerializeField, Min(0.1f)] private float staminaRecoveryPerSecond = 1.5f;
+    [SerializeField, Min(0f)] private float sprintRecoveryDelay = 0.75f;
     [SerializeField] private float jumpForce = 1.2f;
     [SerializeField] private float gravity = -9.81f;
 
@@ -39,6 +43,11 @@ public class PlayerController : NetworkBehaviour
     private float verticalRotation;
     private bool jumpPressed;
     private bool sprintHeld;
+    private float stamina;
+    private float sprintReleasedAt;
+    private MainGameView mainGameView;
+
+    public float StaminaNormalized => maxStamina <= 0f ? 0f : stamina / maxStamina;
 
     protected override void OnSpawned()
     {
@@ -65,6 +74,9 @@ public class PlayerController : NetworkBehaviour
         }
 
         playerInput.enabled = true;
+        stamina = maxStamina;
+        InstanceHandler.TryGetInstance(out mainGameView);
+        mainGameView?.PlayerHUD.SetStamina(StaminaNormalized);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -114,7 +126,19 @@ public class PlayerController : NetworkBehaviour
 
         move = Vector3.ClampMagnitude(move, 1f);
 
-        float speed = sprintHeld ? sprintSpeed : moveSpeed;
+        bool canSprint = sprintHeld && moveInput.sqrMagnitude > 0.01f && stamina > 0f;
+        if (canSprint)
+        {
+            stamina = Mathf.Max(0f, stamina - sprintDrainPerSecond * Time.deltaTime);
+            sprintReleasedAt = Time.time;
+        }
+        else if (Time.time >= sprintReleasedAt + sprintRecoveryDelay)
+        {
+            stamina = Mathf.Min(maxStamina, stamina + staminaRecoveryPerSecond * Time.deltaTime);
+        }
+
+        mainGameView?.PlayerHUD.SetStamina(StaminaNormalized);
+        float speed = canSprint ? sprintSpeed : moveSpeed;
 
         controller.Move(move * speed * Time.deltaTime);
 

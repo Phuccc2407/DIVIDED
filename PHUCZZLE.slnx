@@ -36,6 +36,7 @@
   <Project Path="Unity.Burst.CodeGen.csproj" />
   <Project Path="Unity.Cinemachine.csproj" />
   <Project Path="Unity.Postprocessing.Editor.csproj" />
+  <Project Path="PurrServices.Runtime.csproj" />
   <Project Path="Unity.VisualScripting.Flow.csproj" />
   <Project Path="Unity.Splines.Editor.csproj" />
   <Project Path="Unity.PerformanceTesting.csproj" />
@@ -53,10 +54,13 @@
   <Project Path="glTFast.Newtonsoft.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.2D.Editor.Overrides.csproj" />
   <Project Path="Unity.Postprocessing.Runtime.csproj" />
+  <Project Path="CFXRRuntime.csproj" />
   <Project Path="SimpleWebTransport.csproj" />
   <Project Path="Unity.PlasticSCM.Editor.Assistant.csproj" />
   <Project Path="Unity.2D.Sprite.Editor.csproj" />
   <Project Path="Unity.AI.Navigation.Editor.csproj" />
+  <Project Path="CFXRDemo.csproj" />
+  <Project Path="CFXREditor.csproj" />
   <Project Path="Unity.Multiplayer.Center.Common.csproj" />
   <Project Path="glTFast.Documentation.Examples.csproj" />
   <Project Path="com.rlabrecque.steamworks.net.editor.csproj" />
@@ -78,6 +82,8 @@
   <Project Path="Unity.InputSystem.TestFramework.csproj" />
   <Project Path="Unity.ShaderGraph.Utilities.csproj" />
   <Project Path="Unity.VisualScripting.Shared.Editor.csproj" />
+  <Project Path="PurrServices.Editor.csproj" />
+  <Project Path="KinoBloom.Runtime.csproj" />
   <Project Path="PurrNet.UTP.Runtime.csproj" />
   <Project Path="PurrNet.Nakama.Runtime.csproj" />
   <Project Path="Unity.SurfaceCache.Runtime.csproj" />
@@ -85,8 +91,10 @@
   <Project Path="Unity.InternalAPIEngineBridge.RenderPipelines.Core.Runtime.Shared.csproj" />
   <Project Path="Unity.InputSystem.ForUI.Editor.csproj" />
   <Project Path="Unity.CollabProxy.Editor.csproj" />
+  <Project Path="CFXR.WelcomeScreen.csproj" />
   <Project Path="Unity.RenderPipeline.Universal.ShaderLibrary.csproj" />
   <Project Path="PurrNet.Profiler.Editor.csproj" />
+  <Project Path="ToonyColorsPro.Demo.Editor.csproj" />
   <Project Path="PurrNet.Mathematics.csproj" />
   <Project Path="glTFast.dots.csproj" />
   <Project Path="Unity.InternalAPIEngineBridge.RenderPipelines.Core.Editor.csproj" />
@@ -103,6 +111,7 @@
   <Project Path="Unity.Rendering.LightTransport.Editor.csproj" />
   <Project Path="Unity.Collections.Editor.csproj" />
   <Project Path="Unity.Mathematics.csproj" />
+  <Project Path="PurrServices.Steam.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.Config.Runtime.csproj" />
   <Project Path="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj" />
   <Project Path="Unity.RenderPipelines.Core.ShaderLibrary.csproj" />

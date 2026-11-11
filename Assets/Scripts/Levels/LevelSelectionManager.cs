@@ -18,6 +18,11 @@ public class LevelSelectionManager : NetworkBehaviour
     [ServerRpc(requireOwnership: false)]
     public void RequestLevel(int levelIndex)
     {
+        HandleLevelRequest(levelIndex);
+    }
+
+    private void HandleLevelRequest(int levelIndex)
+    {
         if (levelIndex < 0 || levelIndex >= levelSpawns.Count)
         {
             Debug.LogWarning($"Rejected level request {levelIndex}: no matching spawn points.", this);
@@ -31,13 +36,43 @@ public class LevelSelectionManager : NetworkBehaviour
             return;
         }
 
+        TeleportPlayers(levelIndex);
+        PlayLevelMusic(levelIndex);
+    }
+
+    public void ReturnPlayersToHub(int hubLevelIndex)
+    {
+        if (!isServer)
+        {
+            Debug.LogWarning(
+                $"Rejected Hub return from non-server {name}.", this);
+            return;
+        }
+
+        HandleLevelRequest(hubLevelIndex);
+    }
+
+    [ObserversRpc(runLocally: true)]
+    private void TeleportPlayers(int levelIndex)
+    {
+        if (levelIndex < 0 || levelIndex >= levelSpawns.Count)
+        {
+            Debug.LogWarning($"Rejected level teleport {levelIndex}: no matching spawn points.", this);
+            return;
+        }
+
+        RefreshPlayers();
+        if (players.Count == 0)
+        {
+            Debug.LogWarning("Cannot teleport players because no players are spawned.", this);
+            return;
+        }
+
         var spawn = levelSpawns[levelIndex];
         TeleportPlayer(players[0], spawn.firstPlayer);
 
         if (players.Count > 1)
             TeleportPlayer(players[1], spawn.secondPlayer);
-
-        PlayLevelMusic(levelIndex);
     }
 
     [ObserversRpc(runLocally: true)]

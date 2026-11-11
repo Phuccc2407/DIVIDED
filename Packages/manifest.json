@@ -50,6 +50,7 @@
     "com.unity.modules.vehicles": "1.0.0",
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "dev.purrnet.services": "https://github.com/PurrNet/PurrServices.git?path=Assets/Tool#v1.2.1"
   }
 }
