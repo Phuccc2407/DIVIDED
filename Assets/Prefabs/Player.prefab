@@ -885,15 +885,31 @@ MonoBehaviour:
   _directChildren: []
   moveSpeed: 5
   sprintSpeed: 8
+  maxStamina: 5
+  sprintDrainPerSecond: 1
+  staminaRecoveryPerSecond: 1.5
+  sprintRecoveryDelay: 0.75
   jumpForce: 1.2
   gravity: -9.81
   lookSensitivity: 0.1
   maxLookAngle: 80
   playerCamera: {fileID: 4121568114948920643}
-  renderers: []
+  renderers:
+  - {fileID: 923086815675783675}
   stateMachine: {fileID: 0}
   weaponStates: []
   playerInput: {fileID: 2152953055545848388}
+  animator: {fileID: 8672594942511781015}
+  animationDamping: 0.1
+  animationSyncInterval: 0.1
+  footstepClips:
+  - {fileID: 8300000, guid: fb6e6956d1196b3439dd6b922f3f214f, type: 3}
+  glassFootstepClips: []
+  jumpSound: {fileID: 0}
+  landingSound: {fileID: 8300000, guid: bb153bd47893f2b4daf8ca52a6d4540e, type: 3}
+  walkStepDistance: 1.8
+  runStepDistance: 2.2
+  playerSfxVolume: 0.7
 --- !u!114 &1253027436452184426
 MonoBehaviour:
   m_ObjectHideFlags: 0

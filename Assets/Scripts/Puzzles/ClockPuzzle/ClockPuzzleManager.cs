@@ -47,7 +47,6 @@ public class ClockPuzzleManager : PuzzleBase
         }
 
         SolvePuzzle();
-        ShowSolvedUI();
         Debug.Log("Clock Puzzle Solved!");
     }
 
@@ -63,10 +62,4 @@ public class ClockPuzzleManager : PuzzleBase
         }
     }
 
-    [ObserversRpc]
-    void ShowSolvedUI()
-    {
-        InstanceHandler.GetInstance<GameViewManager>()
-            .ShowView<PuzzleSolvedView>();
-    }
 }

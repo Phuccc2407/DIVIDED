@@ -16,12 +16,20 @@ public class PlayerHUD : MonoBehaviour
         this.staminaSlider = staminaSlider;
         this.carriedItemText = carriedItemText;
         this.carriedPromptText = carriedPromptText;
+        if (staminaSlider != null)
+        {
+            staminaSlider.minValue = 0f;
+            staminaSlider.maxValue = 1f;
+            staminaSlider.wholeNumbers = false;
+            staminaSlider.interactable = false;
+            staminaSlider.SetValueWithoutNotify(1f);
+        }
     }
 
     public void SetStamina(float normalized)
     {
         if (staminaSlider != null)
-            staminaSlider.value = Mathf.Clamp01(normalized);
+            staminaSlider.SetValueWithoutNotify(Mathf.Clamp01(normalized));
     }
 
     public void SetCarriedItem(string itemName, string prompt = "")

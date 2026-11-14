@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf54954111bdfbc831ab2f863861c04f, type: 3}
+  m_Name: DIVIDED_BackgroundMusic
+  m_EditorClassIdentifier: Assembly-CSharp::BackgroundMusicPlaylist
+  lobbyMusic: {fileID: 8300000, guid: 7375a4fe23d63664283ba878959ed602, type: 3}
+  gameMusic: {fileID: 8300000, guid: 7375a4fe23d63664283ba878959ed602, type: 3}
+  levelMusic:
+  - levelIndex: 0
+    clip: {fileID: 8300000, guid: 12b6ab2e20d627c4d907dc83d8e072dd, type: 3}
+  - levelIndex: 1
+    clip: {fileID: 8300000, guid: f20e19a533bd196499867e0549ae695a, type: 3}
+  - levelIndex: 2
+    clip: {fileID: 8300000, guid: 17c8576c69a951049a268db804027e45, type: 3}
+  - levelIndex: 3
+    clip: {fileID: 8300000, guid: 6ac2ed82527bcd244adf96dab6e93845, type: 3}

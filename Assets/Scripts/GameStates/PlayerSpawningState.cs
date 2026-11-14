@@ -29,6 +29,8 @@ public class PlayerSpawningState : StateNode
         {
             var spawnPoint = spawnPoints[currentSpawnIndex];
             var newPlayer = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+            // An inactive prefab still needs an active character/camera at runtime.
+            newPlayer.gameObject.SetActive(true);
             newPlayer.GiveOwnership(player);
             currentSpawnIndex++;
 

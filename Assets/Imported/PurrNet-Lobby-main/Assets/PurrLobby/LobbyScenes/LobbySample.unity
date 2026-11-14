@@ -5077,6 +5077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38948b0000f320e4a8aa309d39d95daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundMusic
+  playlist: {fileID: 11400000, guid: fd30999a4b00287d4b1a5c906fc8f902, type: 2}
   lobbyMusic: {fileID: 8300000, guid: 7375a4fe23d63664283ba878959ed602, type: 3}
   gameMusic: {fileID: 8300000, guid: 7375a4fe23d63664283ba878959ed602, type: 3}
   levelMusic:
@@ -5084,6 +5085,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 12b6ab2e20d627c4d907dc83d8e072dd, type: 3}
   - levelIndex: 1
     clip: {fileID: 8300000, guid: f20e19a533bd196499867e0549ae695a, type: 3}
+  - levelIndex: 2
+    clip: {fileID: 8300000, guid: 17c8576c69a951049a268db804027e45, type: 3}
+  - levelIndex: 3
+    clip: {fileID: 8300000, guid: 6ac2ed82527bcd244adf96dab6e93845, type: 3}
   lobbySceneName: LobbySample
 --- !u!82 &1873829790
 AudioSource:
@@ -5097,10 +5102,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

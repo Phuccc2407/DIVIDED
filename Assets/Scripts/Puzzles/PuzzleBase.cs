@@ -20,6 +20,8 @@ public abstract class PuzzleBase : NetworkBehaviour
 
         solved = true;
 
-        AllPuzzleManager.Instance.PuzzleSolved(this);
+        if (LevelSelectionManager.Instance != null && LevelSelectionManager.Instance.NotifyPuzzleCompleted(this))
+            return;
+        if (AllPuzzleManager.Instance != null) AllPuzzleManager.Instance.PuzzleSolved(this);
     }
 }

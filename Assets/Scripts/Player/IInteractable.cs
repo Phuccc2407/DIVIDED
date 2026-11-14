@@ -10,3 +10,8 @@ public interface IInteractablePrompt
 {
     string InteractionPrompt { get; }
 }
+
+public interface IInteractableAvailability
+{
+    bool CanInteract { get; }
+}

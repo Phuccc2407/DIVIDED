@@ -13,7 +13,9 @@ public class PlayerInteractor : NetworkBehaviour
 
     IInteractable current;
     Outline currentOutline;
+    string currentPrompt;
     PlayerCarryController carryController;
+    public Vector3 InteractionOrigin => cam != null ? cam.transform.position : transform.position;
 
     protected override void OnSpawned()
     {
@@ -95,15 +97,24 @@ public class PlayerInteractor : NetworkBehaviour
         }
     }
 
-    void Update()
+    void LateUpdate()
     {
-        if (!isOwner || PlayerInputBlocker.IsBlocked)
+        if (!isOwner)
             return;
+        if (PlayerInputBlocker.IsBlocked)
+        {
+            ClearCurrent();
+            return;
+        }
 
         if (carryController == null)
             carryController = GetComponent<PlayerCarryController>();
 
+        // Buttons move through Transform, so queries must see their current collider poses.
+        Physics.SyncTransforms();
         CheckInteractable();
+
+        if (Keyboard.current == null) return;
 
         if (Keyboard.current.qKey.wasPressedThisFrame && carryController != null && carryController.IsCarrying)
         {
@@ -135,28 +146,39 @@ public class PlayerInteractor : NetworkBehaviour
 
     void CheckInteractable()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, distance, interactableLayer))
+        if (cam != null && Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, distance, interactableLayer))
         {
-            if (hit.collider.TryGetComponent(out IInteractable interactable))
+            var interactable = hit.collider.GetComponentInParent<IInteractable>();
+            if (interactable != null)
             {
+                if (interactable is IInteractableAvailability availability && !availability.CanInteract)
+                {
+                    ClearCurrent();
+                    return;
+                }
                 if (interactable != current)
                 {
                     ClearCurrent();
 
                     current = interactable;
 
-                    // UI
-                    string interactionPrompt = GetInteractionPrompt(interactable);
-                    interactTextView.SetText(interactionPrompt);
-                    gameViewManager.ShowView<InteractTextView>(false);
-                    UpdateCarriedHud(interactionPrompt);
-
                     // Outline
-                    if (hit.collider.TryGetComponent(out Outline outline))
+                    if (interactable is TheatreButton button)
+                        button.Highlight(true);
+                    else if (hit.collider.TryGetComponent(out Outline outline))
                     {
                         currentOutline = outline;
                         currentOutline.enabled = true;
                     }
+                }
+                // Symbols and button availability can change without moving the crosshair.
+                string interactionPrompt = GetInteractionPrompt(interactable);
+                if (interactionPrompt != currentPrompt)
+                {
+                    currentPrompt = interactionPrompt;
+                    if (interactTextView != null) interactTextView.SetText(interactionPrompt);
+                    if (gameViewManager != null) gameViewManager.ShowView<InteractTextView>(false);
+                    UpdateCarriedHud(interactionPrompt);
                 }
                 return;
             }
@@ -200,8 +222,10 @@ public class PlayerInteractor : NetworkBehaviour
     {
         if (current != null)
         {
-            gameViewManager.HideView<InteractTextView>();
+            if (current is TheatreButton button && button != null) button.Highlight(false);
+            if (gameViewManager != null) gameViewManager.HideView<InteractTextView>();
             current = null;
+            currentPrompt = null;
             UpdateCarriedHud();
         }
 

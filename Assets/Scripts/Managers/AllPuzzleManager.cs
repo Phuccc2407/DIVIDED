@@ -36,7 +36,7 @@ public class AllPuzzleManager : NetworkBehaviour
     [ServerRpc]
     public void PuzzleSolved(PuzzleBase puzzle)
     {
-        if (puzzle != puzzles[currentIndex])
+        if (currentIndex >= puzzles.Count || puzzle != puzzles[currentIndex])
             return;
 
         currentIndex++;

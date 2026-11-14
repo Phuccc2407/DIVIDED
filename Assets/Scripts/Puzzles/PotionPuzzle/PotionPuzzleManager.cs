@@ -23,7 +23,6 @@ public class PotionPuzzleManager : PuzzleBase
     [SerializeField, Min(0.1f)] private float heatTolerance = 0.1f;
     [SerializeField] private PotionCookingStation cookingStation;
     [SerializeField] private LevelSelectionManager levelSelectionManager;
-    [SerializeField, Min(0)] private int hubLevelIndex;
 
     [Header("Scene Particle Effects")]
     [SerializeField] private ParticleSystem explosionEffect;
@@ -182,7 +181,6 @@ public class PotionPuzzleManager : PuzzleBase
         {
             batchState = PotionBatchState.Completed;
             SolvePuzzle();
-            ShowSolvedUI();
             ReturnPlayersToHub();
             return;
         }
@@ -259,7 +257,7 @@ public class PotionPuzzleManager : PuzzleBase
         if (levelSelectionManager == null)
             return;
 
-        levelSelectionManager.ReturnPlayersToHub(hubLevelIndex);
+        levelSelectionManager.ReturnPlayersToHub();
     }
 
     private void ResetBatch()
